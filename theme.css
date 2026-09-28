@@ -6,24 +6,27 @@
 
 /* --- COLOR VARIABLES --- */
 :root {
-  /* LIGHT MODE (High Contrast Executive Theme) */
-  --bg-primary: #f1f5f9;
-  --bg-secondary: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.95);
-  --border-color: #cbd5e1;
+  /* LIGHT MODE (High Contrast Executive Dashboard) */
+  --bg-primary: #e2e8f0;            /* Distinct Gray Canvas */
+  --bg-secondary: #ffffff;          /* Pure White Cards */
+  --bg-card: #ffffff;
+  --border-color: #cbd5e1;          /* Defined Slate Borders */
   --border-hover: #0284c7;
   
-  --text-primary: #0f172a;       /* Very Dark Slate - Super Crisp Readability */
-  --text-secondary: #334155;     /* Dark Charcoal Blue */
-  --text-muted: #475569;         /* High Contrast Subtext */
+  --text-primary: #0f172a;          /* Deep Dark Charcoal for Titles */
+  --text-secondary: #334155;        /* Dark Slate for Subtitles & Links */
+  --text-muted: #475569;            /* High Contrast Muted Text */
   
   --accent-cyan: #0284c7;
-  --accent-purple: #6b21a8;
+  --accent-purple: #7e22ce;
   --accent-neon: #0369a1;
   
-  --shadow-color: rgba(15, 23, 42, 0.12);
-  --glow-cyan: rgba(2, 132, 199, 0.25);
-  --input-bg: #ffffff;
+  --shadow-color: rgba(15, 23, 42, 0.08);
+  --glow-cyan: rgba(2, 132, 199, 0.2);
+  --input-bg: #f8fafc;
+  --input-border: #94a3b8;
+  --pill-bg: #e0f2fe;
+  --pill-text: #0369a1;
 }
 
 html.dark {
@@ -35,8 +38,8 @@ html.dark {
   --border-hover: #06b6d4;
   
   --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
   
   --accent-cyan: #06b6d4;
   --accent-purple: #a855f7;
@@ -45,6 +48,9 @@ html.dark {
   --shadow-color: rgba(0, 0, 0, 0.6);
   --glow-cyan: rgba(6, 182, 212, 0.4);
   --input-bg: rgba(15, 23, 42, 0.8);
+  --input-border: rgba(255, 255, 255, 0.2);
+  --pill-bg: rgba(6, 182, 212, 0.15);
+  --pill-text: #38bdf8;
 }
 
 body {
@@ -59,65 +65,69 @@ body {
   font-family: 'Outfit', sans-serif;
 }
 
-/* Force Text Colors for Superior Readability */
-p, span, h1, h2, h3, h4, th, td, label, button, input, select {
-  color: inherit;
-}
-
-.light p, .light .text-slate-400, .light .text-slate-500 {
-  color: var(--text-secondary) !important;
-}
-
-.light h1, .light h2, .light h3, .light .font-bold, .light .font-black {
-  color: var(--text-primary) !important;
-}
-
-/* --- CUSTOM FUTURISTIC SCROLLBAR --- */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-purple));
-  border-radius: 999px;
-}
-
-/* --- 3D GLASSMORPHISM PANELS & CARDS --- */
+/* --- GLASSMORPHISM & CARDS --- */
 .glass-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
   box-shadow: 0 10px 25px -5px var(--shadow-color);
 }
 
 .hover-3d-card {
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transform-style: preserve-3d;
+  transition: all 0.25s ease;
 }
 
 .hover-3d-card:hover {
-  transform: translateY(-6px) rotateX(1deg) rotateY(-1deg) scale(1.01);
-  box-shadow: 0 20px 40px -10px var(--glow-cyan);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px -5px var(--glow-cyan);
   border-color: var(--border-hover);
 }
 
-/* --- INPUTS & SELECTS IN LIGHT MODE --- */
-input, select {
-  background-color: var(--input-bg);
-  color: var(--text-primary);
-  border-color: var(--border-color);
+/* --- LIGHT MODE SPECIFIC TEXT OVERRIDES --- */
+.light .text-slate-400, 
+.light .text-slate-500, 
+.light .text-slate-600 {
+  color: var(--text-muted) !important;
 }
 
-/* --- TACTILE 3D BUTTON EFFECT --- */
+.light .text-slate-300, 
+.light .text-slate-200, 
+.light .text-slate-100 {
+  color: var(--text-secondary) !important;
+}
+
+.light nav a {
+  color: #1e293b !important;
+  font-weight: 600;
+}
+
+.light nav a:hover {
+  background-color: #f1f5f9 !important;
+  color: var(--accent-cyan) !important;
+}
+
+/* --- INPUTS & BUTTONS --- */
+input, select {
+  background-color: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--input-border) !important;
+}
+
 .btn-3d {
   transition: all 0.15s ease;
   box-shadow: 0 4px 12px var(--shadow-color);
 }
+
 .btn-3d:active {
-  transform: translateY(2px) scale(0.97);
+  transform: translateY(2px);
+}
+
+/* --- BADGES & PILLS --- */
+.badge-pill {
+  background-color: var(--pill-bg) !important;
+  color: var(--pill-text) !important;
+  border: 1px solid var(--border-color);
 }
 
 /* --- TEXT GRADIENTS --- */
