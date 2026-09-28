@@ -1,0 +1,98 @@
+/* ==========================================================================
+   AJ HELPDESK V3 - GLOBAL 3D GLASSMORPHISM SYSTEM & THEMING ENGINE
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap');
+
+/* --- COLOR VARIABLES (LIGHT & DARK MODES) --- */
+:root {
+  /* LIGHT MODE (Executive Frosted Glass) */
+  --bg-primary: #f1f5f9;
+  --bg-secondary: rgba(255, 255, 255, 0.85);
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --border-color: rgba(203, 213, 225, 0.8);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --accent-cyan: #0284c7;
+  --accent-purple: #7e22ce;
+  --accent-neon: #0284c7;
+  --shadow-color: rgba(14, 165, 233, 0.08);
+  --glow-cyan: rgba(2, 132, 199, 0.2);
+}
+
+html.dark {
+  /* DARK MODE (Cosmic 3D Command Center) */
+  --bg-primary: #050b14;
+  --bg-secondary: rgba(15, 23, 42, 0.8);
+  --bg-card: rgba(15, 23, 42, 0.65);
+  --border-color: rgba(255, 255, 255, 0.12);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-cyan: #06b6d4;
+  --accent-purple: #a855f7;
+  --accent-neon: #00f2fe;
+  --shadow-color: rgba(0, 0, 0, 0.6);
+  --glow-cyan: rgba(6, 182, 212, 0.4);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* --- CUSTOM FUTURISTIC SCROLLBAR --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-purple));
+  border-radius: 999px;
+}
+
+/* --- 3D GLASSMORPHISM PANELS & CARDS --- */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 40px var(--shadow-color);
+}
+
+.hover-3d-card {
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.hover-3d-card:hover {
+  transform: translateY(-6px) rotateX(2deg) rotateY(-2deg) scale(1.01);
+  box-shadow: 0 25px 50px -12px var(--glow-cyan);
+  border-color: var(--accent-cyan);
+}
+
+/* --- TACTILE 3D BUTTON EFFECT --- */
+.btn-3d {
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px var(--glow-cyan);
+}
+.btn-3d:active {
+  transform: translateY(2px) scale(0.97);
+}
+
+/* --- TEXT GRADIENTS --- */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-neon), var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
