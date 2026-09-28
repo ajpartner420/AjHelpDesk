@@ -1,1176 +1,962 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AJ HelpDesk - Knowledge & Practical Information Hub</title>
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              400: '#60a5fa',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-              cyan: '#06b6d4',
-              purple: '#8b5cf6'
-            },
-            darkbg: '#0b1120',
-            darkcard: 'rgba(15, 23, 42, 0.75)',
-            lightbg: '#f8fafc',
-            lightcard: 'rgba(255, 255, 255, 0.85)'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif']
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJ HelpDesk V3 - Knowledge Base & Office Productivity Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-  <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.6);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #3b82f6;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #2563eb;
-    }
+        /* Glassmorphism utility effects */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
-    /* Glassmorphism Styles */
-    .glass-panel {
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-    }
-    .dark .glass-panel {
-      background: rgba(15, 23, 42, 0.7);
-      border-color: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
-    .light .glass-panel {
-      background: rgba(255, 255, 255, 0.82);
-      border-color: rgba(226, 232, 240, 0.8);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-    }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
 
-    .glass-dropdown {
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-    .dark .glass-dropdown {
-      background: rgba(11, 17, 32, 0.95);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-    }
-    .light .glass-dropdown {
-      background: rgba(255, 255, 255, 0.98);
-      border: 1px solid rgba(203, 213, 225, 0.9);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    }
+        .glass-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
 
-    /* Subtle 3D Card Hover & Dynamic Lighting */
-    .tilt-card {
-      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-    .tilt-card:hover {
-      transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
-    }
-    .dark .tilt-card:hover {
-      box-shadow: 0 15px 30px -10px rgba(6, 182, 212, 0.25), 0 0 15px rgba(59, 130, 246, 0.3);
-      border-color: rgba(59, 130, 246, 0.4);
-    }
-    .light .tilt-card:hover {
-      box-shadow: 0 20px 30px -10px rgba(59, 130, 246, 0.15);
-      border-color: rgba(59, 130, 246, 0.5);
-    }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
+        }
 
-    /* Button Tactile Effect */
-    .btn-3d {
-      transition: all 0.15s ease;
-      position: relative;
-    }
-    .btn-3d:active {
-      transform: translateY(2px) scale(0.98);
-    }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+        .dark ::webkit-scrollbar-thumb {
+            background: #334155;
+        }
 
-    /* Glow Elements */
-    .glow-cyan {
-      box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
-    }
-    .glow-purple {
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.35);
-    }
-
-    /* Hide Navigation Scrollbars */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-  </style>
+        /* Hide scrollbar for clean UI in specific containers */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </head>
-<body class="bg-lightbg dark:bg-darkbg text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-300 antialiased selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
 
-  <!-- Ambient 3D Glow Background -->
-  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-500/20 dark:bg-brand-600/25 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/3 -right-40 w-96 h-96 bg-brand-cyan/20 dark:bg-brand-cyan/20 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-10 left-1/3 w-96 h-96 bg-brand-purple/15 dark:bg-brand-purple/20 rounded-full blur-3xl"></div>
-  </div>
-
-  <!-- HEADER & NAVIGATION -->
-  <header class="sticky top-0 z-40 w-full glass-panel border-b border-slate-200/60 dark:border-slate-800/80 transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20">
-        
-        <!-- Brand Logo -->
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
-          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-brand-600 via-brand-cyan to-brand-purple p-0.5 shadow-lg shadow-brand-500/30 flex items-center justify-center btn-3d">
-            <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
-              <i class="fa-solid fa-headset text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-cyan text-lg sm:text-xl"></i>
-            </div>
-          </div>
-          <div>
-            <div class="flex items-center space-x-1.5">
-              <span class="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-slate-900 via-brand-600 to-brand-cyan dark:from-white dark:via-slate-100 dark:to-brand-cyan bg-clip-text text-transparent">AJ HelpDesk</span>
-              <span class="px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide bg-brand-500/10 text-brand-600 dark:bg-brand-400/20 dark:text-brand-400 rounded-md border border-brand-500/20">V3</span>
-            </div>
-            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Knowledge & Information Hub</p>
-          </div>
-        </div>
-
-        <!-- Desktop Navigation Menu (Multi-level Dropdowns) -->
-        <nav class="hidden lg:flex items-center space-x-1">
-          <button onclick="navigateTo('home')" class="px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200/50 dark:hover:bg-slate-800/60 transition-colors flex items-center space-x-1.5">
-            <i class="fa-solid fa-house text-brand-500"></i>
-            <span>Home</span>
-          </button>
-
-          <!-- HR & Payroll Dropdown -->
-          <div class="relative group">
-            <button onclick="navigateTo('category', 'hr-payroll')" class="px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200/50 dark:hover:bg-slate-800/60 transition-colors flex items-center space-x-1.5">
-              <i class="fa-solid fa-users text-indigo-500"></i>
-              <span>HR & Payroll</span>
-              <i class="fa-solid fa-chevron-down text-[10px] opacity-60 group-hover:rotate-180 transition-transform"></i>
-            </button>
-            <div class="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <div class="glass-dropdown rounded-2xl p-2 shadow-2xl">
-                <a href="#" onclick="navigateTo('category', 'hr-payroll', 'pf-epfo')" class="p-2 rounded-xl hover:bg-brand-500/10 dark:hover:bg-brand-500/20 flex items-center space-x-3 text-xs font-medium text-slate-700 dark:text-slate-200"><i class="fa-solid fa-piggy-bank text-brand-500"></i><span>PF & EPFO Compliance</span></a>
-                <a href="#" onclick="navigateTo('category', 'hr-payroll', 'esic')" class="p-2 rounded-xl hover:bg-brand-500/10 dark:hover:bg-brand-500/20 flex items-center space-x-3 text-xs font-medium text-slate-700 dark:text-slate-200"><i class="fa-solid fa-notes-medical text-teal-500"></i><span>ESIC Rules & Returns</span></a>
-                <a href="#" onclick="navigateTo('category', 'hr-payroll', 'salary-payroll')" class="p-2 rounded-xl hover:bg-brand-500/10 dark:hover:bg-brand-500/20 flex items-center space-x-3 text-xs font-medium text-slate-700 dark:text-slate-200"><i class="fa-solid fa-file-invoice-dollar text-emerald-500"></i><span>Salary & Payroll Calc</span></a>
-                <a href="#" onclick="navigateTo('category', 'hr-payroll', 'labour-laws')" class="p-2 rounded-xl hover:bg-brand-500/10 dark:hover:bg-brand-500/20 flex items-center space-x-3 text-xs font-medium text-slate-700 dark:text-slate-200"><i class="fa-solid fa-scale-balanced text-amber-500"></i><span>Labour License & Laws</span></a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Excel Dropdown -->
-          <div class="relative group">
-            <button onclick="navigateTo('category', 'excel')" class="px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200/50 dark:hover:bg-slate-800/60 transition-colors flex items-center space-x-1.5">
-              <i class="fa-solid fa-file-excel text-emerald-500"></i>
-              <span>Excel</span>
-              <i class="fa-solid fa-chevron-down text-[10px] opacity-60 group-hover:rotate-180 transition-transform"></i>
-            </button>
-            <div class="absolute left-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <div class="glass-dropdown rounded-2xl p-2 shadow-2xl">
-                <a href="#" onclick="navigateTo('article', 'xlookup-guide')" class="p-2 rounded-xl hover:bg-brand-500/10 dark:hover:bg-brand-500/20 flex items-center space-x-3 text-xs font-medium text-slate-700 dark:text-slate-200"><i class="fa-solid fa-bolt text-amber-400"></i><span>XLOOKUP Complete Guide</span></a>
-                <a href="#" onclick="navigateTo('category', 'excel', 'vlookup')" class="p-2 rounded-xl hover:bg-brand-500/10 dark:hover:bg-brand-500/20 flex items-center space-x-3 text-xs font-medium text-slate-700 dark:text-slate-200"><i class="fa-solid fa-magnifying-glass text-blue-400"></i><span>VLOOKUP & HLOOKUP</span></a>
-                <a href="#" onclick="navigateTo('category', 'excel', 'pivot')" class="p-2 rounded-xl hover:bg-brand-500/10 dark:hover:bg-brand-500/20 flex items-center space-x-3 text-xs font-medium text-slate-700 dark:text-slate-200"><i class="fa-solid fa-table text-purple-400"></i><span>Pivot Tables & Dashboards</span></a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Career Dropdown -->
-          <div class="relative group">
-            <button onclick="navigateTo('category', 'career')" class="px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200/50 dark:hover:bg-slate-800/60 transition-colors flex items-center space-x-1.5">
-              <i class="fa-solid fa-briefcase text-amber-500"></i>
-              <span>Career</span>
-            </button>
-          </div>
-
-          <!-- Office Skills -->
-          <button onclick="navigateTo('category', 'office-skills')" class="px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200/50 dark:hover:bg-slate-800/60 transition-colors flex items-center space-x-1.5">
-            <i class="fa-solid fa-desktop text-sky-500"></i>
-            <span>Office Skills</span>
-          </button>
-
-          <!-- Productivity -->
-          <button onclick="navigateTo('category', 'productivity')" class="px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200/50 dark:hover:bg-slate-800/60 transition-colors flex items-center space-x-1.5">
-            <i class="fa-solid fa-bolt text-yellow-400"></i>
-            <span>Productivity</span>
-          </button>
-
-          <!-- Tools & Tech -->
-          <button onclick="navigateTo('category', 'tools-tech')" class="px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200/50 dark:hover:bg-slate-800/60 transition-colors flex items-center space-x-1.5">
-            <i class="fa-solid fa-wand-magic-sparkles text-purple-500"></i>
-            <span>Tools & Tech</span>
-          </button>
-        </nav>
-
-        <!-- Right Side Actions (Search & Theme Toggle) -->
-        <div class="flex items-center space-x-2 sm:space-x-3">
-          <!-- Quick Search Button -->
-          <button onclick="toggleSearchModal(true)" class="btn-3d flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-slate-200/60 dark:bg-slate-800/70 border border-slate-300/50 dark:border-slate-700/60 text-slate-600 dark:text-slate-300 hover:text-brand-500 dark:hover:text-brand-400 text-xs sm:text-sm font-medium">
-            <i class="fa-solid fa-magnifying-glass text-brand-500"></i>
-            <span class="hidden md:inline">Search guides...</span>
-            <kbd class="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono font-semibold bg-slate-300 dark:bg-slate-900 text-slate-500 dark:text-slate-400 rounded">Ctrl K</kbd>
-          </button>
-
-          <!-- Light/Dark Mode Switcher -->
-          <button id="themeToggleBtn" onclick="toggleTheme()" class="btn-3d p-2.5 rounded-xl bg-slate-200/60 dark:bg-slate-800/70 border border-slate-300/50 dark:border-slate-700/60 text-slate-700 dark:text-amber-400 hover:scale-105 transition-transform" title="Toggle Theme">
-            <i class="fa-solid fa-sun dark:hidden text-lg text-amber-500"></i>
-            <i class="fa-solid fa-moon hidden dark:block text-lg"></i>
-          </button>
-
-          <!-- Mobile Hamburger Menu Button -->
-          <button onclick="toggleMobileDrawer(true)" class="lg:hidden btn-3d p-2.5 rounded-xl bg-slate-200/60 dark:bg-slate-800/70 text-slate-700 dark:text-slate-200">
-            <i class="fa-solid fa-bars text-xl"></i>
-          </button>
-        </div>
-
-      </div>
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/3 -left-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
     </div>
-  </header>
 
-  <!-- MOBILE DRAWER NAVIGATION -->
-  <div id="mobileDrawer" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300">
-    <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-md" onclick="toggleMobileDrawer(false)"></div>
-    <div class="absolute right-0 top-0 bottom-0 w-80 max-w-[85vw] glass-dropdown p-6 shadow-2xl flex flex-col justify-between overflow-y-auto">
-      <div>
-        <div class="flex items-center justify-between pb-6 border-b border-slate-700/50">
-          <span class="text-xl font-bold bg-gradient-to-r from-brand-400 to-brand-cyan bg-clip-text text-transparent">AJ HelpDesk</span>
-          <button onclick="toggleMobileDrawer(false)" class="p-2 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-        </div>
-        
-        <div class="mt-6 space-y-2">
-          <button onclick="navigateTo('home'); toggleMobileDrawer(false);" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-500/20 font-medium flex items-center space-x-3"><i class="fa-solid fa-house text-brand-500"></i><span>Home</span></button>
-          <button onclick="navigateTo('category', 'hr-payroll'); toggleMobileDrawer(false);" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-500/20 font-medium flex items-center space-x-3"><i class="fa-solid fa-users text-indigo-400"></i><span>HR & Payroll</span></button>
-          <button onclick="navigateTo('category', 'excel'); toggleMobileDrawer(false);" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-500/20 font-medium flex items-center space-x-3"><i class="fa-solid fa-file-excel text-emerald-400"></i><span>Excel & Formulas</span></button>
-          <button onclick="navigateTo('category', 'career'); toggleMobileDrawer(false);" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-500/20 font-medium flex items-center space-x-3"><i class="fa-solid fa-briefcase text-amber-400"></i><span>Career & Resume</span></button>
-          <button onclick="navigateTo('category', 'office-skills'); toggleMobileDrawer(false);" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-500/20 font-medium flex items-center space-x-3"><i class="fa-solid fa-desktop text-sky-400"></i><span>Office Skills</span></button>
-          <button onclick="navigateTo('category', 'productivity'); toggleMobileDrawer(false);" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-500/20 font-medium flex items-center space-x-3"><i class="fa-solid fa-bolt text-yellow-400"></i><span>Productivity</span></button>
-          <button onclick="navigateTo('category', 'tools-tech'); toggleMobileDrawer(false);" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-500/20 font-medium flex items-center space-x-3"><i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i><span>Tools & AI Tech</span></button>
-        </div>
-      </div>
+    <header class="sticky top-0 z-40 glass border-b border-slate-200/50 dark:border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Brand -->
+                <div class="flex items-center gap-3">
+                    <button onclick="navigateTo('home')" class="flex items-center gap-2 group">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-headset text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+                            AJ HelpDesk <span class="text-xs px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 font-mono border border-brand-500/20">v3.0</span>
+                        </span>
+                    </button>
+                </div>
 
-      <div class="pt-6 border-t border-slate-700/50 text-center text-xs text-slate-500">
-        AJ HelpDesk V3 • Modern Information Platform
-      </div>
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <button onclick="navigateTo('home')" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-house mr-1.5 opacity-70"></i> Home
+                    </button>
+                    
+                    <!-- Categories Dropdown -->
+                    <div class="relative group">
+                        <button class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1">
+                            <i class="fa-solid fa-grid-2 mr-1 opacity-70"></i> Categories
+                            <i class="fa-solid fa-chevron-down text-xs ml-1 opacity-60 group-hover:rotate-180 transition-transform"></i>
+                        </button>
+                        <div class="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="p-2 glass rounded-xl shadow-xl border border-slate-200/50 dark:border-slate-800/50 space-y-1">
+                                <a href="javascript:void(0)" onclick="filterCategory('HR & Payroll')" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm hover:bg-brand-500/10 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                                    <i class="fa-solid fa-calculator w-5 text-indigo-500"></i> HR & Payroll
+                                </a>
+                                <a href="javascript:void(0)" onclick="filterCategory('Excel')" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm hover:bg-brand-500/10 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                                    <i class="fa-solid fa-file-excel w-5 text-emerald-500"></i> Excel Formulas
+                                </a>
+                                <a href="javascript:void(0)" onclick="filterCategory('Career')" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm hover:bg-brand-500/10 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                                    <i class="fa-solid fa-briefcase w-5 text-amber-500"></i> Career & Resume
+                                </a>
+                                <a href="javascript:void(0)" onclick="filterCategory('Office Skills')" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm hover:bg-brand-500/10 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                                    <i class="fa-solid fa-laptop-code w-5 text-blue-500"></i> Office Skills
+                                </a>
+                                <a href="javascript:void(0)" onclick="filterCategory('Productivity')" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm hover:bg-brand-500/10 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                                    <i class="fa-solid fa-bolt w-5 text-yellow-500"></i> Productivity
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="scrollToTools()" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-screwdriver-wrench mr-1.5 opacity-70"></i> Interactive Tools
+                    </button>
+                </nav>
+
+                <!-- Action Controls -->
+                <div class="flex items-center gap-2">
+                    <!-- Quick Search Trigger -->
+                    <button onclick="openSearchModal()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-300/40 dark:border-slate-700/40 text-xs text-slate-500 dark:text-slate-400 transition">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="hidden sm:inline">Search docs...</span>
+                        <kbd class="hidden sm:inline bg-slate-300/50 dark:bg-slate-700/50 px-1.5 py-0.5 rounded text-[10px] font-mono">Ctrl K</kbd>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="themeToggle" onclick="toggleTheme()" class="p-2.5 rounded-xl hover:bg-slate-200/60 dark:hover:bg-slate-800/60 text-slate-600 dark:text-slate-300 transition" title="Toggle theme">
+                        <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                        <i class="fa-solid fa-sun hidden dark:block text-lg text-amber-400"></i>
+                    </button>
+
+                    <!-- Admin Desk Drawer trigger -->
+                    <button onclick="promptAdminAccess()" class="p-2.5 rounded-xl bg-brand-500/10 hover:bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/20 transition" title="Admin Portal (Ctrl+Shift+A)">
+                        <i class="fa-solid fa-user-shield text-lg"></i>
+                    </button>
+
+                    <!-- Mobile Drawer Toggle Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl hover:bg-slate-200/60 dark:hover:bg-slate-800/60 text-slate-600 dark:text-slate-300">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobileDrawer" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden transition-opacity duration-300 opacity-0">
+        <div class="fixed inset-y-0 left-0 w-4/5 max-w-xs glass bg-slate-900 p-6 flex flex-col justify-between shadow-2xl transform -translate-x-full transition-transform duration-300" id="mobileDrawerContent">
+            <div>
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <span class="font-bold text-lg">AJ HelpDesk</span>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="p-2 text-slate-400 hover:text-white">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <button onclick="navigateTo('home'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center gap-3">
+                        <i class="fa-solid fa-house text-brand-400"></i> Home
+                    </button>
+                    <div class="pt-2 border-t border-slate-800">
+                        <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Categories</p>
+                        <div class="space-y-1">
+                            <button onclick="filterCategory('HR & Payroll'); toggleMobileMenu();" class="w-full text-left px-3 py-1.5 rounded-lg text-sm hover:bg-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-calculator text-indigo-400 text-xs"></i> HR & Payroll
+                            </button>
+                            <button onclick="filterCategory('Excel'); toggleMobileMenu();" class="w-full text-left px-3 py-1.5 rounded-lg text-sm hover:bg-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-file-excel text-emerald-400 text-xs"></i> Excel
+                            </button>
+                            <button onclick="filterCategory('Career'); toggleMobileMenu();" class="w-full text-left px-3 py-1.5 rounded-lg text-sm hover:bg-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-briefcase text-amber-400 text-xs"></i> Career Guides
+                            </button>
+                            <button onclick="filterCategory('Office Skills'); toggleMobileMenu();" class="w-full text-left px-3 py-1.5 rounded-lg text-sm hover:bg-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-laptop-code text-blue-400 text-xs"></i> Office Skills
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 text-xs text-slate-400">
+                <p>AJ HelpDesk V3 &copy; 2026</p>
+                <p class="mt-1">Zero-Backend Ready Hub</p>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- MAIN APP CONTENT AREA (SPA VIEWS) -->
-  <main class="flex-grow z-10 relative">
+    <!-- MAIN SPA CONTAINER -->
+    <main id="app" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 z-10">
+        <!-- Views injected via JS -->
+    </main>
 
-    <!-- VIEW 1: HOME VIEW -->
-    <section id="viewHome" class="space-y-16 py-8 sm:py-12">
-      
-      <!-- HERO SECTION -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="glass-panel rounded-3xl p-6 sm:p-12 relative overflow-hidden text-center border border-slate-200/80 dark:border-slate-800/80 shadow-2xl">
-          <!-- Background Glow Elements -->
-          <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-brand-600/30 to-brand-cyan/30 rounded-full blur-3xl pointer-events-none"></div>
-
-          <span class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 dark:bg-brand-400/20 border border-brand-500/30 text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-wider mb-6">
-            <span class="w-2 h-2 rounded-full bg-brand-cyan animate-ping"></span>
-            <span>Your Ultimate Knowledge Hub</span>
-          </span>
-
-          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight max-w-4xl mx-auto leading-tight">
-            Simplified Guides, Real Answers & <span class="bg-gradient-to-r from-brand-500 via-brand-cyan to-brand-purple bg-clip-text text-transparent">Practical Solutions</span>
-          </h1>
-          <p class="mt-4 sm:mt-6 text-slate-600 dark:text-slate-300 text-base sm:text-lg max-w-2xl mx-auto font-normal">
-            Master Excel formulas, HR compliance, office productivity, salary calculations, and career growth with step-by-step easy-to-follow articles.
-          </p>
-
-          <!-- Hero Search Box -->
-          <div class="mt-8 max-w-2xl mx-auto relative">
-            <div class="relative flex items-center">
-              <i class="fa-solid fa-magnifying-glass absolute left-4 text-slate-400 text-lg"></i>
-              <input type="text" id="heroSearchInput" onkeyup="handleHeroSearch(event)" placeholder="Search anything (e.g. XLOOKUP, PF Calculation, Resume format)..." class="w-full pl-12 pr-28 py-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm sm:text-base font-medium">
-              <button onclick="triggerHeroSearch()" class="absolute right-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-cyan text-white text-sm font-bold shadow-md hover:brightness-110 btn-3d">
-                Search
-              </button>
+    <!-- Global Search Modal -->
+    <div id="searchModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-start justify-center pt-16 px-4">
+        <div class="glass max-w-2xl w-full rounded-2xl shadow-2xl border border-slate-200/50 dark:border-slate-800/50 overflow-hidden">
+            <div class="p-4 border-b border-slate-200/50 dark:border-slate-800/50 flex items-center gap-3">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-lg"></i>
+                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Type to search formulas, PF calculations, career tips..." class="w-full bg-transparent border-none outline-none text-slate-800 dark:text-slate-100 placeholder-slate-400 text-base">
+                <button onclick="closeSearchModal()" class="text-xs bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 px-2 py-1 rounded text-slate-500">ESC</button>
             </div>
-          </div>
-
-          <!-- Quick Topic Pills -->
-          <div class="mt-6 flex flex-wrap justify-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-400">
-            <span class="text-slate-400 font-semibold self-center">Trending:</span>
-            <button onclick="navigateTo('article', 'xlookup-guide')" class="px-3 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800/80 hover:bg-brand-500 hover:text-white transition-all">🔥 XLOOKUP Guide</button>
-            <button onclick="navigateTo('article', 'pf-basics')" class="px-3 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800/80 hover:bg-brand-500 hover:text-white transition-all">💼 PF & EPFO Calculator</button>
-            <button onclick="navigateTo('category', 'career')" class="px-3 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800/80 hover:bg-brand-500 hover:text-white transition-all">📄 Resume Tips 2026</button>
-          </div>
+            <div id="searchResults" class="max-h-96 overflow-y-auto p-4 space-y-2">
+                <p class="text-center text-sm text-slate-500 py-8">Start typing to search articles...</p>
+            </div>
         </div>
-      </div>
-
-      <!-- FEATURED & POPULAR ARTICLES -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-8">
-          <div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Popular & Featured Guides</h2>
-            <p class="text-sm text-slate-500 dark:text-slate-400">Most requested practical articles by professionals</p>
-          </div>
-          <button onclick="navigateTo('category', 'all')" class="text-xs sm:text-sm font-bold text-brand-500 hover:underline flex items-center space-x-1">
-            <span>Explore All</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
-
-        <!-- Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          
-          <!-- Article Card 1 -->
-          <div onclick="navigateTo('article', 'xlookup-guide')" class="tilt-card glass-panel rounded-2xl p-6 cursor-pointer flex flex-col justify-between border border-slate-200 dark:border-slate-800/80 relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-bl-full pointer-events-none"></div>
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Excel Mastery</span>
-                <span class="text-xs text-slate-400 font-medium"><i class="fa-regular fa-clock mr-1"></i> 6 min read</span>
-              </div>
-              <h3 class="text-xl font-bold group-hover:text-brand-500 transition-colors line-clamp-2">Master XLOOKUP in Excel: Complete Formula Guide with Examples</h3>
-              <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm line-clamp-3">Say goodbye to VLOOKUP & HLOOKUP. Learn how XLOOKUP works with live interactive syntax tester & real-world table examples.</p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-brand-500">
-              <span class="flex items-center space-x-2 text-slate-500 dark:text-slate-400">
-                <i class="fa-solid fa-user text-xs"></i>
-                <span>AJ HelpDesk Team</span>
-              </span>
-              <span>Read Guide <i class="fa-solid fa-chevron-right ml-1"></i></span>
-            </div>
-          </div>
-
-          <!-- Article Card 2 -->
-          <div onclick="navigateTo('article', 'pf-basics')" class="tilt-card glass-panel rounded-2xl p-6 cursor-pointer flex flex-col justify-between border border-slate-200 dark:border-slate-800/80 relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/10 rounded-bl-full pointer-events-none"></div>
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">HR & Payroll</span>
-                <span class="text-xs text-slate-400 font-medium"><i class="fa-regular fa-clock mr-1"></i> 8 min read</span>
-              </div>
-              <h3 class="text-xl font-bold group-hover:text-brand-500 transition-colors line-clamp-2">EPFO PF Calculation Rules 2026: Employee & Employer Share Explained</h3>
-              <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm line-clamp-3">Understand 12% PF deduction, EPS breakdown, admin charges, and test your own salary numbers with our live embedded PF Calculator.</p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-brand-500">
-              <span class="flex items-center space-x-2 text-slate-500 dark:text-slate-400">
-                <i class="fa-solid fa-user text-xs"></i>
-                <span>Compliance Desk</span>
-              </span>
-              <span>Read Guide <i class="fa-solid fa-chevron-right ml-1"></i></span>
-            </div>
-          </div>
-
-          <!-- Article Card 3 -->
-          <div onclick="navigateTo('article', 'resume-guide')" class="tilt-card glass-panel rounded-2xl p-6 cursor-pointer flex flex-col justify-between border border-slate-200 dark:border-slate-800/80 relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-bl-full pointer-events-none"></div>
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20">Career Growth</span>
-                <span class="text-xs text-slate-400 font-medium"><i class="fa-regular fa-clock mr-1"></i> 5 min read</span>
-              </div>
-              <h3 class="text-xl font-bold group-hover:text-brand-500 transition-colors line-clamp-2">How to Build an ATS-Friendly Resume in 2026 (Free Format)</h3>
-              <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm line-clamp-3">Beat HR automated filtering software! Proven layout, bullet points, and key action verbs that get you interview calls.</p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-brand-500">
-              <span class="flex items-center space-x-2 text-slate-500 dark:text-slate-400">
-                <i class="fa-solid fa-user text-xs"></i>
-                <span>Career Expert</span>
-              </span>
-              <span>Read Guide <i class="fa-solid fa-chevron-right ml-1"></i></span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CATEGORIES GRID -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-2xl mx-auto mb-12">
-          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">Explore Knowledge Categories</h2>
-          <p class="text-sm sm:text-base text-slate-500 dark:text-slate-400 mt-2">Comprehensive operational resources categorized for rapid learning</p>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          
-          <!-- Category Item 1 -->
-          <div onclick="navigateTo('category', 'hr-payroll')" class="tilt-card glass-panel rounded-2xl p-5 cursor-pointer text-center group border border-slate-200 dark:border-slate-800">
-            <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-500 mx-auto flex items-center justify-center text-2xl group-hover:scale-110 transition-transform mb-3">
-              <i class="fa-solid fa-users"></i>
-            </div>
-            <h3 class="font-bold text-base group-hover:text-brand-500">HR & Payroll</h3>
-            <p class="text-xs text-slate-400 mt-1">PF, ESIC, Salary & Laws</p>
-            <span class="mt-3 inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">18 Articles</span>
-          </div>
-
-          <!-- Category Item 2 -->
-          <div onclick="navigateTo('category', 'excel')" class="tilt-card glass-panel rounded-2xl p-5 cursor-pointer text-center group border border-slate-200 dark:border-slate-800">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 mx-auto flex items-center justify-center text-2xl group-hover:scale-110 transition-transform mb-3">
-              <i class="fa-solid fa-file-excel"></i>
-            </div>
-            <h3 class="font-bold text-base group-hover:text-brand-500">Excel Shortcuts</h3>
-            <p class="text-xs text-slate-400 mt-1">Formulas, Pivot & Dashboards</p>
-            <span class="mt-3 inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">24 Articles</span>
-          </div>
-
-          <!-- Category Item 3 -->
-          <div onclick="navigateTo('category', 'career')" class="tilt-card glass-panel rounded-2xl p-5 cursor-pointer text-center group border border-slate-200 dark:border-slate-800">
-            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 mx-auto flex items-center justify-center text-2xl group-hover:scale-110 transition-transform mb-3">
-              <i class="fa-solid fa-briefcase"></i>
-            </div>
-            <h3 class="font-bold text-base group-hover:text-brand-500">Career & Jobs</h3>
-            <p class="text-xs text-slate-400 mt-1">Resume, Interview & Growth</p>
-            <span class="mt-3 inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">12 Articles</span>
-          </div>
-
-          <!-- Category Item 4 -->
-          <div onclick="navigateTo('category', 'office-skills')" class="tilt-card glass-panel rounded-2xl p-5 cursor-pointer text-center group border border-slate-200 dark:border-slate-800">
-            <div class="w-12 h-12 rounded-2xl bg-sky-500/10 text-sky-500 mx-auto flex items-center justify-center text-2xl group-hover:scale-110 transition-transform mb-3">
-              <i class="fa-solid fa-desktop"></i>
-            </div>
-            <h3 class="font-bold text-base group-hover:text-brand-500">Office Skills</h3>
-            <p class="text-xs text-slate-400 mt-1">Word, Email etiquette, PDF</p>
-            <span class="mt-3 inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">15 Articles</span>
-          </div>
-
-          <!-- Category Item 5 -->
-          <div onclick="navigateTo('category', 'productivity')" class="tilt-card glass-panel rounded-2xl p-5 cursor-pointer text-center group border border-slate-200 dark:border-slate-800">
-            <div class="w-12 h-12 rounded-2xl bg-yellow-500/10 text-yellow-500 mx-auto flex items-center justify-center text-2xl group-hover:scale-110 transition-transform mb-3">
-              <i class="fa-solid fa-bolt"></i>
-            </div>
-            <h3 class="font-bold text-base group-hover:text-brand-500">Productivity</h3>
-            <p class="text-xs text-slate-400 mt-1">Time management & Hacks</p>
-            <span class="mt-3 inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">10 Articles</span>
-          </div>
-
-          <!-- Category Item 6 -->
-          <div onclick="navigateTo('category', 'tools-tech')" class="tilt-card glass-panel rounded-2xl p-5 cursor-pointer text-center group border border-slate-200 dark:border-slate-800">
-            <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-500 mx-auto flex items-center justify-center text-2xl group-hover:scale-110 transition-transform mb-3">
-              <i class="fa-solid fa-wand-magic-sparkles"></i>
-            </div>
-            <h3 class="font-bold text-base group-hover:text-brand-500">Tools & Tech</h3>
-            <p class="text-xs text-slate-400 mt-1">AI Tools, Web Apps & Software</p>
-            <span class="mt-3 inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">14 Articles</span>
-          </div>
-
-          <!-- Category Item 7 -->
-          <div onclick="navigateTo('category', 'finance')" class="tilt-card glass-panel rounded-2xl p-5 cursor-pointer text-center group border border-slate-200 dark:border-slate-800">
-            <div class="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-500 mx-auto flex items-center justify-center text-2xl group-hover:scale-110 transition-transform mb-3">
-              <i class="fa-solid fa-sack-dollar"></i>
-            </div>
-            <h3 class="font-bold text-base group-hover:text-brand-500">Finance & Work</h3>
-            <p class="text-xs text-slate-400 mt-1">Income Tax Basics & Budgeting</p>
-            <span class="mt-3 inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">9 Articles</span>
-          </div>
-
-          <!-- Category Item 8 -->
-          <div onclick="navigateTo('category', 'how-to')" class="tilt-card glass-panel rounded-2xl p-5 cursor-pointer text-center group border border-slate-200 dark:border-slate-800">
-            <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-500 mx-auto flex items-center justify-center text-2xl group-hover:scale-110 transition-transform mb-3">
-              <i class="fa-solid fa-book-open"></i>
-            </div>
-            <h3 class="font-bold text-base group-hover:text-brand-500">How-To Guides</h3>
-            <p class="text-xs text-slate-400 mt-1">Step-by-Step Instructions</p>
-            <span class="mt-3 inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">20 Articles</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- RECOMMENDED RESOURCES / INTERACTIVE TOOLS SHOWCASE -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="glass-panel rounded-3xl p-8 sm:p-10 border border-brand-500/20 bg-gradient-to-br from-brand-600/10 via-transparent to-brand-purple/10">
-          <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="space-y-3 text-center md:text-left max-w-xl">
-              <span class="text-xs font-bold uppercase tracking-widest text-brand-500">Interactive Utilities</span>
-              <h3 class="text-2xl sm:text-3xl font-extrabold">Try Our Free Online Workplace Tools</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Calculate employee PF contributions, test complex Excel lookup logic, and format documents instantly right inside our guide pages.</p>
-            </div>
-            <div class="flex flex-wrap justify-center gap-4">
-              <button onclick="navigateTo('article', 'pf-basics')" class="btn-3d px-6 py-3 rounded-2xl bg-brand-600 text-white font-bold text-sm shadow-lg shadow-brand-500/30 hover:bg-brand-500 flex items-center space-x-2">
-                <i class="fa-solid fa-calculator"></i>
-                <span>Open PF Calculator</span>
-              </button>
-              <button onclick="navigateTo('article', 'xlookup-guide')" class="btn-3d px-6 py-3 rounded-2xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm hover:bg-slate-300 dark:hover:bg-slate-700 flex items-center space-x-2">
-                <i class="fa-solid fa-code"></i>
-                <span>Formula Tester</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- VIEW 2: CATEGORY VIEW -->
-    <section id="viewCategory" class="hidden space-y-10 py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Category Header -->
-      <div class="glass-panel rounded-3xl p-8 border border-slate-200 dark:border-slate-800">
-        <!-- Breadcrumb -->
-        <nav class="flex items-center space-x-2 text-xs font-semibold text-slate-400 mb-4">
-          <span class="hover:text-brand-500 cursor-pointer" onclick="navigateTo('home')">Home</span>
-          <i class="fa-solid fa-chevron-right text-[10px]"></i>
-          <span>Categories</span>
-          <i class="fa-solid fa-chevron-right text-[10px]"></i>
-          <span id="catBreadcrumbActive" class="text-brand-500">HR & Payroll</span>
-        </nav>
-
-        <div class="flex items-center space-x-4">
-          <div id="catHeaderIcon" class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-3xl">
-            <i class="fa-solid fa-folder-open"></i>
-          </div>
-          <div>
-            <h1 id="catHeaderTitle" class="text-3xl font-extrabold">HR & Payroll Center</h1>
-            <p id="catHeaderDesc" class="text-sm text-slate-500 dark:text-slate-400 mt-1">Guides on Provident Fund, ESIC, salary structures, minimum wages, and compliance.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Articles Grid under Category -->
-      <div id="catArticlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Injected Dynamically via JS -->
-      </div>
-
-    </section>
-
-    <!-- VIEW 3: ARTICLE READER VIEW (Standard Article Schema) -->
-    <section id="viewArticle" class="hidden py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Article Header & Breadcrumbs -->
-      <div class="mb-8">
-        <nav class="flex items-center space-x-2 text-xs font-semibold text-slate-400 mb-4">
-          <span class="hover:text-brand-500 cursor-pointer" onclick="navigateTo('home')">Home</span>
-          <i class="fa-solid fa-chevron-right text-[10px]"></i>
-          <span id="artCategoryBreadcrumb" class="hover:text-brand-500 cursor-pointer" onclick="navigateTo('category', 'excel')">Excel</span>
-          <i class="fa-solid fa-chevron-right text-[10px]"></i>
-          <span class="text-slate-500 truncate max-w-xs">Article</span>
-        </nav>
-
-        <span id="artBadge" class="px-3 py-1 rounded-lg text-xs font-extrabold bg-brand-500/10 text-brand-500 border border-brand-500/20">EXCEL TUTORIAL</span>
-        <h1 id="artTitle" class="text-3xl sm:text-5xl font-black tracking-tight mt-3 leading-tight">Master XLOOKUP in Excel: Complete Formula Guide with Examples</h1>
-        
-        <div class="mt-6 flex flex-wrap items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 pb-6 border-b border-slate-200/60 dark:border-slate-800">
-          <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-xs">AJ</div>
-            <span id="artAuthor" class="font-bold text-slate-800 dark:text-slate-200">AJ Technical Team</span>
-          </div>
-          <span>•</span>
-          <span><i class="fa-regular fa-calendar mr-1"></i> <span id="artDate">Sept 2026</span></span>
-          <span>•</span>
-          <span><i class="fa-regular fa-clock mr-1"></i> <span id="artReadTime">6 min read</span></span>
-          <span>•</span>
-          <button class="text-brand-500 font-bold hover:underline"><i class="fa-regular fa-bookmark mr-1"></i> Save Guide</button>
-        </div>
-      </div>
-
-      <!-- Article Main Layout (Content + Table of Contents Sidebar) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12">
-        
-        <!-- MAIN ARTICLE BODY (8 Columns) -->
-        <article class="lg:col-span-8 space-y-8 text-slate-700 dark:text-slate-300 leading-relaxed">
-          
-          <!-- Introduction Box -->
-          <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-brand-500 bg-brand-500/5">
-            <h4 class="text-sm font-bold uppercase tracking-wider text-brand-500 mb-1">Introduction</h4>
-            <p id="artIntro" class="text-sm sm:text-base font-medium">XLOOKUP is Microsoft Excel's modern replacement for VLOOKUP, HLOOKUP, and INDEX/MATCH. It works in any direction, defaults to exact match, and handles missing data gracefully.</p>
-          </div>
-
-          <!-- Dynamic Container for Custom Interactive Tools & Article Sections -->
-          <div id="artMainBody" class="space-y-8 text-sm sm:text-base">
-            <!-- Content Injected Dynamically by Javascript -->
-          </div>
-
-          <!-- FAQ Accordion Section -->
-          <div class="pt-8 border-t border-slate-200 dark:border-slate-800 space-y-4">
-            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">Frequently Asked Questions (FAQ)</h3>
-            <div id="artFaqContainer" class="space-y-3">
-              <!-- FAQs Injected Dynamically -->
-            </div>
-          </div>
-
-        </article>
-
-        <!-- RIGHT SIDEBAR: Table of Contents & Related (4 Columns) -->
-        <aside class="lg:col-span-4 space-y-6">
-          <div class="sticky top-24 glass-panel rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
-            <h4 class="text-xs font-black uppercase tracking-widest text-slate-400">Table of Contents</h4>
-            <ul id="artTocList" class="space-y-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
-              <!-- TOC Injected via JS -->
-            </ul>
-
-            <hr class="border-slate-200 dark:border-slate-800">
-
-            <h4 class="text-xs font-black uppercase tracking-widest text-slate-400 pt-2">Related Articles</h4>
-            <div id="artRelatedList" class="space-y-3">
-              <!-- Related Injected via JS -->
-            </div>
-          </div>
-        </aside>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- GLOBAL SEARCH MODAL OVERLAY -->
-  <div id="searchModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-start justify-center pt-16 sm:pt-24 px-4">
-    <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-md" onclick="toggleSearchModal(false)"></div>
-    <div class="relative w-full max-w-2xl glass-dropdown rounded-3xl p-6 shadow-2xl border border-brand-500/30 z-10 space-y-4">
-      
-      <div class="flex items-center justify-between border-b border-slate-700/50 pb-4">
-        <div class="flex items-center space-x-3 w-full">
-          <i class="fa-solid fa-magnifying-glass text-brand-500 text-lg"></i>
-          <input type="text" id="modalSearchInput" oninput="liveFilterArticles(this.value)" placeholder="Type to search articles, HR topics, formulas..." class="w-full bg-transparent text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none text-base sm:text-lg font-medium">
-        </div>
-        <button onclick="toggleSearchModal(false)" class="p-2 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-      </div>
-
-      <!-- Live Search Results List -->
-      <div id="modalSearchResults" class="max-h-80 overflow-y-auto space-y-2 pr-1">
-        <p class="text-xs text-slate-400 text-center py-6">Start typing to search all AJ HelpDesk guides...</p>
-      </div>
-
-      <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
-        <span>Use <kbd class="px-1 py-0.5 bg-slate-800 rounded font-mono">ESC</kbd> to exit</span>
-        <span>AJ HelpDesk Search V3</span>
-      </div>
-
     </div>
-  </div>
 
-  <!-- FOOTER -->
-  <footer class="glass-panel mt-20 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        
-        <div class="space-y-3">
-          <div class="flex items-center space-x-2">
-            <div class="w-7 h-7 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-xs">AJ</div>
-            <span class="text-base font-extrabold text-slate-900 dark:text-white">AJ HelpDesk</span>
-          </div>
-          <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
-            Content-First Information Hub offering easy, actionable, and accurate guides on HR compliance, Excel formulas, office tech, and career growth.
-          </p>
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass max-w-3xl w-full rounded-2xl shadow-2xl border border-slate-200/50 dark:border-slate-800/50 overflow-hidden max-h-[90vh] flex flex-col">
+            <div class="p-5 border-b border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between bg-slate-100/50 dark:bg-slate-900/50">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-brand-500 text-xl"></i>
+                    <h3 class="font-bold text-lg">Admin Article Manager & Exporter</h3>
+                </div>
+                <button onclick="closeAdminModal()" class="p-1 text-slate-400 hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-grow">
+                <!-- Authentication Panel if not authed -->
+                <div id="adminAuthBlock" class="text-center py-8 space-y-4">
+                    <div class="w-16 h-16 rounded-full bg-brand-500/10 text-brand-500 flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold">Enter Security PIN</h4>
+                    <p class="text-xs text-slate-400">Default PIN is <code class="bg-slate-800 px-1.5 py-0.5 rounded text-brand-400">1234</code></p>
+                    <div class="flex justify-center gap-2 max-w-xs mx-auto">
+                        <input type="password" id="adminPinInput" maxlength="4" placeholder="••••" class="w-32 text-center text-xl tracking-widest px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none">
+                        <button onclick="verifyAdminPin()" class="px-5 py-2 bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-xl transition">Unlock</button>
+                    </div>
+                </div>
+
+                <!-- Admin Management View (Hidden by default) -->
+                <div id="adminContentBlock" class="hidden space-y-6">
+                    <div class="flex items-center justify-between bg-brand-500/10 border border-brand-500/20 p-4 rounded-xl">
+                        <div>
+                            <h4 class="font-bold text-brand-600 dark:text-brand-400 text-sm">Zero-Backend GitHub Sync</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Export current state as JSON array to hardcode directly into index.html for deployment.</p>
+                        </div>
+                        <button onclick="copyArticlesJSON()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg flex items-center gap-2 transition">
+                            <i class="fa-solid fa-copy"></i> Copy Articles JSON
+                        </button>
+                    </div>
+
+                    <!-- Add New Article Form -->
+                    <form id="addArticleForm" onsubmit="saveNewArticle(event)" class="space-y-4 border-t border-slate-200 dark:border-slate-800 pt-4">
+                        <h4 class="font-semibold text-base flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle text-brand-500"></i> Add New Knowledge Article
+                        </h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Article Title</label>
+                                <input type="text" id="newTitle" required placeholder="e.g. How to Calculate HRA Tax Exemption" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Slug ID</label>
+                                <input type="text" id="newSlug" required placeholder="e.g. hra-tax-exemption-guide" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Category</label>
+                                <select id="newCategory" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-500">
+                                    <option value="HR & Payroll">HR & Payroll</option>
+                                    <option value="Excel">Excel</option>
+                                    <option value="Career">Career</option>
+                                    <option value="Office Skills">Office Skills</option>
+                                    <option value="Productivity">Productivity</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Read Time & Badge</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="newReadTime" placeholder="4 min read" class="w-1/2 px-3 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800">
+                                    <input type="text" id="newBadge" placeholder="Guide / Popular" class="w-1/2 px-3 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Short Summary</label>
+                            <input type="text" id="newSummary" required placeholder="Brief description for home cards..." class="w-full px-3 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Article HTML Content</label>
+                            <textarea id="newContent" rows="6" required placeholder="<p>Write standard HTML content here...</p>" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 font-mono text-xs"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl transition shadow-lg shadow-brand-500/20">
+                            Publish Article to Local Storage
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <div>
-          <h4 class="font-bold text-slate-900 dark:text-slate-200 mb-3 text-sm">Main Categories</h4>
-          <ul class="space-y-2">
-            <li><a href="#" onclick="navigateTo('category', 'hr-payroll')" class="hover:text-brand-500">HR & Payroll Compliance</a></li>
-            <li><a href="#" onclick="navigateTo('category', 'excel')" class="hover:text-brand-500">Excel Formulas & Pivot</a></li>
-            <li><a href="#" onclick="navigateTo('category', 'career')" class="hover:text-brand-500">Career & Resume Guides</a></li>
-            <li><a href="#" onclick="navigateTo('category', 'productivity')" class="hover:text-brand-500">Productivity Hacks</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-slate-900 dark:text-slate-200 mb-3 text-sm">Popular Guides</h4>
-          <ul class="space-y-2">
-            <li><a href="#" onclick="navigateTo('article', 'xlookup-guide')" class="hover:text-brand-500">XLOOKUP Masterclass</a></li>
-            <li><a href="#" onclick="navigateTo('article', 'pf-basics')" class="hover:text-brand-500">PF Calculation Rules 2026</a></li>
-            <li><a href="#" onclick="navigateTo('article', 'resume-guide')" class="hover:text-brand-500">ATS Resume Writing Format</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-slate-900 dark:text-slate-200 mb-3 text-sm">Stay Updated</h4>
-          <p class="mb-3">Get practical updates straight to your inbox.</p>
-          <div class="flex items-center space-x-2">
-            <input type="email" placeholder="Your email..." class="w-full px-3 py-2 rounded-xl bg-slate-200/70 dark:bg-slate-800 text-xs focus:outline-none border border-slate-300 dark:border-slate-700">
-            <button onclick="alert('Subscribed successfully!')" class="px-3 py-2 rounded-xl bg-brand-600 text-white font-bold hover:bg-brand-500 btn-3d">Join</button>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="mt-12 pt-6 border-t border-slate-200/60 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p>© 2026 AJ HelpDesk. All rights reserved. Self-contained content portal.</p>
-        <div class="flex space-x-4">
-          <a href="#" class="hover:text-brand-500"><i class="fa-brands fa-twitter text-base"></i></a>
-          <a href="#" class="hover:text-brand-500"><i class="fa-brands fa-linkedin text-base"></i></a>
-          <a href="#" class="hover:text-brand-500"><i class="fa-brands fa-youtube text-base"></i></a>
-        </div>
-      </div>
     </div>
-  </footer>
 
-  <!-- JAVASCRIPT APPLICATION LOGIC -->
-  <script>
-    /* ==========================================================================
-       1. DATABASE OF ARTICLES & CONTENT SCHEMAS
-       ========================================================================== */
-    const ARTICLES_DB = {
-      'xlookup-guide': {
-        id: 'xlookup-guide',
-        category: 'excel',
-        categoryName: 'Excel Mastery',
-        title: 'Master XLOOKUP in Excel: Complete Formula Guide with Examples',
-        author: 'Excel Specialist Team',
-        date: 'Sept 2026',
-        readTime: '6 min read',
-        intro: 'XLOOKUP is Microsoft Excel’s modern function designed to replace VLOOKUP and HLOOKUP. It searches a range or array, and returns an item corresponding to the first match it finds.',
-        faq: [
-          { q: 'Is XLOOKUP available in Excel 2016 or 2019?', a: 'No, XLOOKUP is available in Microsoft 365, Excel 2021, and Excel for the Web.' },
-          { q: 'Does XLOOKUP default to exact match?', a: 'Yes! Unlike VLOOKUP, XLOOKUP defaults to exact match (match_mode = 0), avoiding common lookup errors.' }
-        ],
-        toc: ['Formula Syntax', 'Interactive Simulator', 'VLOOKUP vs XLOOKUP', 'Pro Tips'],
-        related: ['pf-basics', 'resume-guide']
-      },
-      'pf-basics': {
-        id: 'pf-basics',
-        category: 'hr-payroll',
-        categoryName: 'HR & Compliance',
-        title: 'EPFO PF Calculation Rules 2026: Employee & Employer Share Explained',
-        author: 'Compliance & Payroll Desk',
-        date: 'Sept 2026',
-        readTime: '8 min read',
-        intro: 'Provident Fund (PF) is a mandatory savings scheme for salaried employees. Learn how the 12% deduction is split between PF and Pension Scheme (EPS) with our live interactive calculator.',
-        faq: [
-          { q: 'What is the statutory wage ceiling for mandatory PF?', a: 'The mandatory wage ceiling is ₹15,000 basic salary per month.' },
-          { q: 'How much goes into EPS (Pension)?', a: 'Out of employer’s 12% share, 8.33% (capped at ₹1,250) goes to EPS and the remaining balance to Employer PF.' }
-        ],
-        toc: ['Basic Split Rules', 'Interactive PF Calculator', 'Compliance Checklist', 'Important Tips'],
-        related: ['xlookup-guide', 'resume-guide']
-      },
-      'resume-guide': {
-        id: 'resume-guide',
-        category: 'career',
-        categoryName: 'Career Growth',
-        title: 'How to Build an ATS-Friendly Resume in 2026 (Free Blueprint)',
-        author: 'Senior HR Recruiter',
-        date: 'Sept 2026',
-        readTime: '5 min read',
-        intro: 'Modern companies use Applicant Tracking Systems (ATS) to scan resumes before a human ever reads them. Here is how to format your resume to pass automated screens.',
-        faq: [
-          { q: 'Should I send my resume in PDF or Word format?', a: 'Standard clean PDFs are best, provided they contain real selectable text (not scanned images).' },
-          { q: 'How long should a professional resume be?', a: 'Keep it to 1 page for less than 5 years of experience; 2 pages max for senior roles.' }
-        ],
-        toc: ['ATS Basics', 'Key formatting Rules', 'Action Verbs List', 'Common Mistakes'],
-        related: ['xlookup-guide', 'pf-basics']
-      }
-    };
-
-    /* ==========================================================================
-       2. VIEW NAVIGATION & ROUTING ENGINE
-       ========================================================================== */
-    function navigateTo(viewType, param1 = null, param2 = null) {
-      // Hide all views
-      document.getElementById('viewHome').classList.add('hidden');
-      document.getElementById('viewCategory').classList.add('hidden');
-      document.getElementById('viewArticle').classList.add('hidden');
-
-      // Scroll smoothly to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      if (viewType === 'home') {
-        document.getElementById('viewHome').classList.remove('hidden');
-      } 
-      else if (viewType === 'category') {
-        renderCategoryView(param1, param2);
-        document.getElementById('viewCategory').classList.remove('hidden');
-      } 
-      else if (viewType === 'article') {
-        renderArticleView(param1);
-        document.getElementById('viewArticle').classList.remove('hidden');
-      }
-    }
-
-    /* ==========================================================================
-       3. CATEGORY VIEW RENDERER
-       ========================================================================== */
-    function renderCategoryView(catKey, subTag = null) {
-      const titles = {
-        'hr-payroll': 'HR & Payroll Hub',
-        'excel': 'Excel & Formulas Hub',
-        'career': 'Career & Resume Hub',
-        'office-skills': 'Office Skills Hub',
-        'productivity': 'Productivity & Organization',
-        'tools-tech': 'Tools & Tech Innovation',
-        'finance': 'Finance & Salary Hub',
-        'how-to': 'How-To Guides',
-        'all': 'All Articles & Guides'
-      };
-
-      document.getElementById('catHeaderTitle').innerText = titles[catKey] || 'Knowledge Category';
-      document.getElementById('catBreadcrumbActive').innerText = titles[catKey] || 'Category';
-
-      const catGrid = document.getElementById('catArticlesGrid');
-      catGrid.innerHTML = '';
-
-      // Filter matching articles from DB
-      const matchingArticles = Object.values(ARTICLES_DB).filter(art => catKey === 'all' || art.category === catKey);
-
-      if (matchingArticles.length === 0) {
-        catGrid.innerHTML = `
-          <div class="col-span-full text-center py-12 glass-panel rounded-2xl">
-            <i class="fa-solid fa-folder-open text-4xl text-slate-400 mb-3"></i>
-            <h3 class="font-bold text-lg">More guides coming soon!</h3>
-            <p class="text-xs text-slate-400 mt-1">Our team is actively adding articles to this category.</p>
-          </div>
-        `;
-        return;
-      }
-
-      matchingArticles.forEach(art => {
-        catGrid.innerHTML += `
-          <div onclick="navigateTo('article', '${art.id}')" class="tilt-card glass-panel rounded-2xl p-6 cursor-pointer flex flex-col justify-between border border-slate-200 dark:border-slate-800 relative overflow-hidden group">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="px-3 py-1 rounded-lg text-xs font-bold bg-brand-500/10 text-brand-500 border border-brand-500/20">${art.categoryName}</span>
-                <span class="text-xs text-slate-400 font-medium"><i class="fa-regular fa-clock mr-1"></i> ${art.readTime}</span>
-              </div>
-              <h3 class="text-xl font-bold group-hover:text-brand-500 transition-colors">${art.title}</h3>
-              <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm line-clamp-3">${art.intro}</p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-xs font-semibold text-brand-500">
-              <span class="text-slate-400">${art.author}</span>
-              <span>Read Guide <i class="fa-solid fa-chevron-right ml-1"></i></span>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    /* ==========================================================================
-       4. ARTICLE VIEW RENDERER (Schema & Custom Embed Tools)
-       ========================================================================== */
-    function renderArticleView(artId) {
-      const art = ARTICLES_DB[artId] || ARTICLES_DB['xlookup-guide'];
-
-      document.getElementById('artTitle').innerText = art.title;
-      document.getElementById('artCategoryBreadcrumb').innerText = art.categoryName;
-      document.getElementById('artCategoryBreadcrumb').onclick = () => navigateTo('category', art.category);
-      document.getElementById('artBadge').innerText = art.categoryName.toUpperCase();
-      document.getElementById('artAuthor').innerText = art.author;
-      document.getElementById('artDate').innerText = art.date;
-      document.getElementById('artReadTime').innerText = art.readTime;
-      document.getElementById('artIntro').innerText = art.intro;
-
-      // Table of Contents
-      const tocList = document.getElementById('artTocList');
-      tocList.innerHTML = art.toc.map(item => `<li class="hover:text-brand-500 cursor-pointer flex items-center space-x-2"><i class="fa-solid fa-angle-right text-[10px] text-brand-500"></i><span>${item}</span></li>`).join('');
-
-      // FAQs Accordion
-      const faqContainer = document.getElementById('artFaqContainer');
-      faqContainer.innerHTML = art.faq.map((item, idx) => `
-        <div class="glass-panel rounded-xl p-4 border border-slate-200 dark:border-slate-800">
-          <button onclick="toggleFaq(${idx})" class="w-full text-left font-bold text-sm sm:text-base flex justify-between items-center text-slate-900 dark:text-slate-100">
-            <span>${item.q}</span>
-            <i id="faqIcon-${idx}" class="fa-solid fa-chevron-down text-xs text-brand-500 transition-transform"></i>
-          </button>
-          <p id="faqAnswer-${idx}" class="hidden text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-slate-200/40 dark:border-slate-800">${item.a}</p>
+    <footer class="border-t border-slate-200/50 dark:border-slate-800/50 glass mt-12 py-8 z-10">
+        <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:items-center text-xs text-slate-500 dark:text-slate-400">
+            <p>&copy; 2026 AJ HelpDesk. Built for efficiency, payroll speed, and productivity.</p>
+            <p class="mt-2 sm:mt-0 flex items-center justify-center gap-4">
+                <span>Press <kbd class="bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono">Ctrl+Shift+A</kbd> for Admin</span>
+                <span>•</span>
+                <a href="javascript:void(0)" onclick="navigateTo('home')" class="hover:underline">Home</a>
+            </p>
         </div>
-      `).join('');
+    </footer>
 
-      // Related Articles
-      const relatedList = document.getElementById('artRelatedList');
-      relatedList.innerHTML = art.related.map(relId => {
-        const rel = ARTICLES_DB[relId];
-        return rel ? `
-          <div onclick="navigateTo('article', '${rel.id}')" class="p-3 rounded-xl bg-slate-200/50 dark:bg-slate-800/50 hover:bg-brand-500/10 cursor-pointer transition-colors">
-            <h5 class="text-xs font-bold line-clamp-2">${rel.title}</h5>
-            <span class="text-[10px] text-brand-500 font-semibold mt-1 inline-block">${rel.readTime}</span>
-          </div>
-        ` : '';
-      }).join('');
+    <script>
+        // Article Database Definition
+        const DEFAULT_ARTICLES = [
+            {
+                id: 'excel-xlookup-guide',
+                title: 'Mastering Excel XLOOKUP: Modern Formula Guide with Examples',
+                category: 'Excel',
+                badge: 'Excel Essential',
+                readTime: '5 min read',
+                author: 'Anand J.',
+                date: 'Sep 2026',
+                summary: 'Learn why XLOOKUP replaces VLOOKUP & INDEX/MATCH with faster multi-criteria matching, default defaults, and left-side lookups.',
+                content: `
+                    <p class="text-base leading-relaxed mb-4">The <strong>XLOOKUP</strong> function is Excel's modern replacement for VLOOKUP, HLOOKUP, and INDEX/MATCH. It is faster, more flexible, and won't break when columns are inserted or deleted in your spreadsheet.</p>
+                    
+                    <h3 class="text-lg font-bold mt-6 mb-3 text-brand-500">Standard Syntax</h3>
+                    <div class="bg-slate-900 text-emerald-400 font-mono p-4 rounded-xl text-sm mb-4 border border-slate-800">
+                        =XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found], [match_mode], [search_mode])
+                    </div>
 
-      // Render Article Specific Dynamic Tool / Body
-      const bodyContainer = document.getElementById('artMainBody');
-      if (artId === 'xlookup-guide') {
-        bodyContainer.innerHTML = getXLookupArticleBody();
-      } else if (artId === 'pf-basics') {
-        bodyContainer.innerHTML = getPfArticleBody();
-      } else if (artId === 'resume-guide') {
-        bodyContainer.innerHTML = getResumeArticleBody();
-      }
-    }
+                    <h3 class="text-lg font-bold mt-6 mb-3">Key Advantages over VLOOKUP</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-sm">
+                        <li><strong>Look up in any direction:</strong> Works left-to-right or right-to-left.</li>
+                        <li><strong>Built-in error handling:</strong> Supply the 4th argument <code>"Not Found"</code> directly without needing <code>IFERROR()</code>.</li>
+                        <li><strong>Exact match by default:</strong> No longer need to remember adding <code>FALSE</code> at the end.</li>
+                    </ul>
 
-    /* Accordion FAQ Toggle */
-    function toggleFaq(idx) {
-      const ans = document.getElementById(`faqAnswer-${idx}`);
-      const icon = document.getElementById(`faqIcon-${idx}`);
-      ans.classList.toggle('hidden');
-      icon.classList.toggle('rotate-180');
-    }
+                    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-300 text-sm mb-6">
+                        <i class="fa-solid fa-lightbulb mr-2"></i> <strong>Pro Tip:</strong> Test your XLOOKUP logic in real-time using our embedded Excel Tester utility at the bottom of the home page!
+                    </div>
+                `,
+                faqs: [
+                    { q: "Does XLOOKUP work in older Excel versions?", a: "XLOOKUP is available in Microsoft 365, Excel 2021, and Excel for the Web." },
+                    { q: "Can XLOOKUP return multiple columns?", a: "Yes! If you select a multi-column range for return_array, XLOOKUP will spill all columns dynamically." }
+                ]
+            },
+            {
+                id: 'pf-salary-calculation-rules',
+                title: 'Complete Employee PF & Salary Breakdown (12% Rule Guide)',
+                category: 'HR & Payroll',
+                badge: 'Payroll Hub',
+                readTime: '6 min read',
+                author: 'Anand J.',
+                date: 'Sep 2026',
+                summary: 'Understand provident fund calculations, Statutory EPS limit (Rs 15,000 ceiling), employer split, and net take-home pay rules.',
+                content: `
+                    <p class="text-base leading-relaxed mb-4">Provident Fund (PF) is calculated based on Basic Salary + Dearness Allowance (DA). Here is the statutory breakdown under EPFO rules:</p>
+                    
+                    <h3 class="text-lg font-bold mt-6 mb-3">Employee Contribution</h3>
+                    <p class="mb-4 text-sm">Exactly <strong>12%</strong> of Basic + DA is deducted directly from employee earnings into their EPF account.</p>
 
-    /* ==========================================================================
-       5. CUSTOM INTERACTIVE ARTICLE HTML CONTENT & TOOLS
-       ========================================================================== */
-    function getXLookupArticleBody() {
-      return `
-        <section class="space-y-4">
-          <h3 class="text-xl font-bold text-slate-900 dark:text-white">1. XLOOKUP Syntax Breakdown</h3>
-          <p>The standard formula structure is simple:</p>
-          <div class="bg-slate-900 text-emerald-400 font-mono text-xs sm:text-sm p-4 rounded-xl shadow-inner border border-slate-800">
-            =XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found], [match_mode], [search_mode])
-          </div>
-        </section>
+                    <h3 class="text-lg font-bold mt-6 mb-3">Employer Contribution (12% Split)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900/50">
+                            <h4 class="font-bold text-brand-500">EPS (Pension)</h4>
+                            <p class="text-sm mt-1"><strong>8.33%</strong> capped at wage ceiling of ₹15,000 basic (Max ₹1,250 / month).</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900/50">
+                            <h4 class="font-bold text-emerald-500">EPF (Provident Fund)</h4>
+                            <p class="text-sm mt-1">Remaining <strong>3.67%</strong> (or 12% - EPS) deposited directly to EPF account.</p>
+                        </div>
+                    </div>
+                `,
+                faqs: [
+                    { q: "What is the statutory basic pay limit for PF?", a: "The mandatory PF ceiling limit is ₹15,000 per month basic salary." }
+                ]
+            },
+            {
+                id: 'excel-if-and-nested-logic',
+                title: 'Mastering IF & Nested Logic in Excel Worksheets',
+                category: 'Excel',
+                badge: 'Formulas',
+                readTime: '4 min read',
+                author: 'Anand J.',
+                date: 'Sep 2026',
+                summary: 'Learn logical conditions using IF, AND, OR, and IFS functions to automate payroll grading and employee evaluations.',
+                content: `
+                    <p class="text-base leading-relaxed mb-4">The <code>IF</code> function allows conditional decision-making in Excel. Combining it with <code>AND</code> or <code>OR</code> makes conditional reporting simple.</p>
+                    <div class="bg-slate-900 text-emerald-400 font-mono p-4 rounded-xl text-sm mb-4 border border-slate-800">
+                        =IF(AND(A2>=50000, B2="Sales"), "Eligible for Bonus", "Standard")
+                    </div>
+                `,
+                faqs: [
+                    { q: "How many nested IFs can Excel handle?", a: "Modern Excel allows up to 64 nested IF functions, but IFS() is cleaner." }
+                ]
+            },
+            {
+                id: 'ats-resume-building-guide',
+                title: 'ATS-Friendly Resume Blueprint for Office & Tech Roles',
+                category: 'Career',
+                badge: 'Career Growth',
+                readTime: '7 min read',
+                author: 'Anand J.',
+                date: 'Aug 2026',
+                summary: 'How to format your resume to pass automated Applicant Tracking Systems (ATS) and land HR interviews.',
+                content: `
+                    <p class="text-base leading-relaxed mb-4">ATS screening software evaluates your resume before a recruiter ever reads it. Here is how to format for 95%+ parse scores:</p>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-sm">
+                        <li>Use standard fonts (Inter, Arial, Calibri)</li>
+                        <li>Avoid multi-column tables, graphics, or text inside images</li>
+                        <li>Mirror exact keyword titles from target job descriptions</li>
+                    </ul>
+                `,
+                faqs: [
+                    { q: "PDF or DOCX?", a: "Unless specified otherwise, clean single-column PDF or DOCX are both parser-safe." }
+                ]
+            }
+        ];
 
-        <!-- Interactive Formula Simulator Tool -->
-        <section class="glass-panel p-6 rounded-2xl border border-brand-500/30 space-y-4 my-6">
-          <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-calculator text-brand-500 text-lg"></i>
-            <h4 class="font-extrabold text-slate-900 dark:text-white text-base">Live Interactive XLOOKUP Simulator</h4>
-          </div>
-          <p class="text-xs text-slate-400">Select an Employee ID to simulate real-time lookup in Excel table:</p>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="text-xs font-bold text-slate-400">Select Employee ID (lookup_value):</label>
-              <select id="simEmpId" onchange="runXLookupSim()" class="w-full mt-1 p-2.5 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-bold">
-                <option value="101">101 (Rahul Sharma)</option>
-                <option value="102">102 (Priya Patel)</option>
-                <option value="103">103 (Amit Verma)</option>
-                <option value="999">999 (Invalid Test)</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-xs font-bold text-slate-400">Target Lookup Column (return_array):</label>
-              <select id="simCol" onchange="runXLookupSim()" class="w-full mt-1 p-2.5 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-bold">
-                <option value="Salary">Salary Column</option>
-                <option value="Department">Department Column</option>
-              </select>
-            </div>
-          </div>
+        // Global State Manager
+        let articles = JSON.parse(localStorage.getItem('aj_articles')) || DEFAULT_ARTICLES;
+        let currentCategoryFilter = null;
+        let adminAuthed = false;
 
-          <!-- Formula Preview Box -->
-          <div class="bg-slate-950 p-3 rounded-xl font-mono text-xs text-brand-cyan">
-            Formula Result: <span id="simFormulaCode" class="text-white font-bold">=XLOOKUP("101", A2:A4, C2:C4, "Not Found")</span>
-          </div>
-          
-          <div class="p-3 bg-brand-500/10 rounded-xl text-xs font-bold text-brand-500 flex justify-between">
-            <span>Evaluated Output:</span>
-            <span id="simResult" class="text-emerald-400 font-extrabold">₹75,000</span>
-          </div>
-        </section>
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderHome();
 
-        <section class="space-y-4">
-          <h3 class="text-xl font-bold text-slate-900 dark:text-white">2. Pro Tips for Excel Efficiency</h3>
-          <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm font-medium text-amber-700 dark:text-amber-300">
-            💡 <strong>Pro Tip:</strong> XLOOKUP can also lookup from right to left, unlike VLOOKUP which forces the lookup key to be in the first column!
-          </div>
-        </section>
-      `;
-    }
+            // Keyboard Shortcuts
+            window.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                    e.preventDefault();
+                    openSearchModal();
+                }
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+                    e.preventDefault();
+                    promptAdminAccess();
+                }
+            });
+        });
 
-    function getPfArticleBody() {
-      return `
-        <!-- Live Interactive PF Calculator Widget -->
-        <section class="glass-panel p-6 rounded-2xl border border-indigo-500/30 space-y-4 my-4">
-          <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-piggy-bank text-indigo-500 text-lg"></i>
-            <h4 class="font-extrabold text-slate-900 dark:text-white text-base">Live Interactive PF Calculator (EPFO Rules)</h4>
-          </div>
+        // Theme Switcher Logic
+        function initTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
 
-          <div class="space-y-3">
-            <div>
-              <label class="text-xs font-bold text-slate-400">Monthly Basic Salary + DA (₹):</label>
-              <input type="number" id="calcBasic" value="25000" oninput="calculatePf()" class="w-full mt-1 p-2.5 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-bold">
-            </div>
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-center text-xs">
-              <div class="p-3 rounded-xl bg-slate-200/60 dark:bg-slate-900/80">
-                <span class="block text-slate-400">Employee Share (12%)</span>
-                <span id="resEePf" class="text-base font-extrabold text-brand-500">₹3,000</span>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-200/60 dark:bg-slate-900/80">
-                <span class="block text-slate-400">EPS Pension (8.33% Capped)</span>
-                <span id="resEps" class="text-base font-extrabold text-teal-500">₹1,250</span>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-200/60 dark:bg-slate-900/80">
-                <span class="block text-slate-400">Employer PF Balance</span>
-                <span id="resErPf" class="text-base font-extrabold text-indigo-400">₹1,750</span>
-              </div>
-            </div>
-          </div>
-        </section>
+        // Mobile Menu Drawer Handler
+        function toggleMobileMenu() {
+            const drawer = document.getElementById('mobileDrawer');
+            const content = document.getElementById('mobileDrawerContent');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    drawer.classList.remove('opacity-0');
+                    content.classList.remove('-translate-x-full');
+                }, 10);
+            } else {
+                drawer.classList.add('opacity-0');
+                content.classList.add('-translate-x-full');
+                setTimeout(() => {
+                    drawer.classList.add('hidden');
+                }, 300);
+            }
+        }
 
-        <section class="space-y-4">
-          <h3 class="text-xl font-bold text-slate-900 dark:text-white">PF Breakdown Table</h3>
-          <p class="text-xs sm:text-sm">The 12% contribution by the employer is split into two components:</p>
-          <ul class="list-disc pl-5 text-xs sm:text-sm space-y-1">
-            <li><strong>EPS (Employees Pension Scheme):</strong> 8.33% of basic wage (capped at ₹1,250 per month).</li>
-            <li><strong>EPF (Employees Provident Fund):</strong> Balance percentage goes into the employee PF account.</li>
-          </ul>
-        </section>
-      `;
-    }
+        // NAVIGATION ROUTER
+        function navigateTo(view, param = null) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const app = document.getElementById('app');
 
-    function getResumeArticleBody() {
-      return `
-        <section class="space-y-4">
-          <h3 class="text-xl font-bold text-slate-900 dark:text-white">1. Key Rules for 2026 ATS Resumes</h3>
-          <ul class="space-y-2 text-xs sm:text-sm">
-            <li class="flex items-center space-x-2"><i class="fa-solid fa-circle-check text-emerald-500"></i><span>Use simple standard headings like "Work Experience", "Education", "Skills".</span></li>
-            <li class="flex items-center space-x-2"><i class="fa-solid fa-circle-check text-emerald-500"></i><span>Avoid complex tables, graphics, or text boxes that confuse ATS parsers.</span></li>
-            <li class="flex items-center space-x-2"><i class="fa-solid fa-circle-check text-emerald-500"></i><span>Incorporate relevant job description keywords naturally into achievements.</span></li>
-          </ul>
-        </section>
-      `;
-    }
+            if (view === 'home') {
+                currentCategoryFilter = null;
+                renderHome();
+            } else if (view === 'category') {
+                currentCategoryFilter = param;
+                renderCategoryView(param);
+            } else if (view === 'article') {
+                renderArticleView(param);
+            }
+        }
 
-    /* Calculator Logic */
-    function runXLookupSim() {
-      const empId = document.getElementById('simEmpId').value;
-      const col = document.getElementById('simCol').value;
-      
-      const db = {
-        '101': { Salary: '₹75,000', Department: 'Finance & Accounts' },
-        '102': { Salary: '₹62,000', Department: 'Human Resources' },
-        '103': { Salary: '₹88,000', Department: 'IT Systems' }
-      };
+        function filterCategory(cat) {
+            navigateTo('category', cat);
+        }
 
-      document.getElementById('simFormulaCode').innerText = `=XLOOKUP("${empId}", A2:A4, ${col === 'Salary' ? 'C2:C4' : 'B2:B4'}, "Not Found")`;
-      
-      if (db[empId]) {
-        document.getElementById('simResult').innerText = db[empId][col];
-        document.getElementById('simResult').className = 'text-emerald-400 font-extrabold';
-      } else {
-        document.getElementById('simResult').innerText = '#N/A - Not Found';
-        document.getElementById('simResult').className = 'text-rose-400 font-extrabold';
-      }
-    }
+        function scrollToTools() {
+            if (!document.getElementById('pfCalculatorCard')) {
+                navigateTo('home');
+                setTimeout(() => {
+                    document.getElementById('pfCalculatorCard')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            } else {
+                document.getElementById('pfCalculatorCard')?.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
-    function calculatePf() {
-      const basic = parseFloat(document.getElementById('calcBasic').value) || 0;
-      const eePf = Math.round(basic * 0.12);
-      
-      // EPS is 8.33% of basic wage capped at 15000 ceiling -> Max 1250
-      const epsWage = Math.min(basic, 15000);
-      const eps = Math.round(epsWage * 0.0833);
-      const erPf = eePf - eps;
+        function renderHome() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <!-- Hero Section -->
+                <section class="text-center py-12 px-4 space-y-6">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20">
+                        <i class="fa-solid fa-sparkles mr-1"></i> Knowledge Base & Office Automation Hub
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight max-w-3xl mx-auto leading-tight">
+                        Streamline HR, Payroll & Excel Workflows Effortlessly.
+                    </h1>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
+                        Instant guides, statutory PF salary calculators, formula testing, and ATS resume standards built for modern workplace productivity.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-3 pt-2">
+                        <button onclick="openSearchModal()" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-medium text-sm shadow-lg shadow-brand-500/25 transition flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass text-xs"></i> Search Helpdesk
+                        </button>
+                        <button onclick="scrollToTools()" class="px-6 py-3 rounded-xl glass hover:bg-slate-200/50 dark:hover:bg-slate-800/50 font-medium text-sm transition flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-brand-500"></i> Open Calculators
+                        </button>
+                    </div>
+                </section>
 
-      document.getElementById('resEePf').innerText = '₹' + eePf.toLocaleString();
-      document.getElementById('resEps').innerText = '₹' + eps.toLocaleString();
-      document.getElementById('resErPf').innerText = '₹' + erPf.toLocaleString();
-    }
+                <!-- Category Cards Grid -->
+                <section class="my-12">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold tracking-tight">Explore Categories</h2>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        ${renderCategoryCard('HR & Payroll', 'fa-calculator', 'indigo', 'PF Rules, HRA, Payroll')}
+                        ${renderCategoryCard('Excel', 'fa-file-excel', 'emerald', 'XLOOKUP, IF, Formulas')}
+                        ${renderCategoryCard('Career', 'fa-briefcase', 'amber', 'Resume ATS, Interviews')}
+                        ${renderCategoryCard('Office Skills', 'fa-laptop-code', 'blue', 'Outlook, Docs, Productivity')}
+                    </div>
+                </section>
 
-    /* ==========================================================================
-       6. GLOBAL SEARCH & MODAL CONTROLS
-       ========================================================================== */
-    function toggleSearchModal(show) {
-      const modal = document.getElementById('searchModal');
-      if (show) {
-        modal.classList.remove('invisible', 'opacity-0');
-        document.getElementById('modalSearchInput').focus();
-      } else {
-        modal.classList.add('invisible', 'opacity-0');
-      }
-    }
+                <!-- Featured Knowledge Articles -->
+                <section class="my-12">
+                    <h2 class="text-xl font-bold tracking-tight mb-6">Featured Knowledge Guides</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${articles.map(art => renderArticleCard(art)).join('')}
+                    </div>
+                </section>
 
-    function handleHeroSearch(e) {
-      if (e.key === 'Enter') triggerHeroSearch();
-    }
+                <!-- Embedded Interactive Tools Section -->
+                <section class="my-16 space-y-12">
+                    <div class="text-center space-y-2">
+                        <h2 class="text-2xl sm:text-3xl font-extrabold">Embedded Interactive Utilities</h2>
+                        <p class="text-slate-500 text-sm">Instant real-time tools operating without backend reliance.</p>
+                    </div>
 
-    function triggerHeroSearch() {
-      const val = document.getElementById('heroSearchInput').value;
-      toggleSearchModal(true);
-      document.getElementById('modalSearchInput').value = val;
-      liveFilterArticles(val);
-    }
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- PF Calculator -->
+                        <div id="pfCalculatorCard" class="glass p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 space-y-6">
+                            <div class="flex items-center gap-3 border-b border-slate-200/50 dark:border-slate-800/50 pb-4">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-calculator"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-base">PF & Salary Breakdown Calculator</h3>
+                                    <p class="text-xs text-slate-400">Statutory 12% PF & ₹15k EPS Cap Breakdown</p>
+                                </div>
+                            </div>
 
-    function liveFilterArticles(query) {
-      const resultsContainer = document.getElementById('modalSearchResults');
-      if (!query.trim()) {
-        resultsContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">Start typing to search all AJ HelpDesk guides...</p>';
-        return;
-      }
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 mb-1">Monthly Gross Basic + DA (₹)</label>
+                                    <input type="number" id="pfBasicInput" value="25000" oninput="calculatePF()" class="w-full px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 font-mono text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                </div>
 
-      const q = query.toLowerCase();
-      const filtered = Object.values(ARTICLES_DB).filter(art => 
-        art.title.toLowerCase().includes(q) || 
-        art.categoryName.toLowerCase().includes(q) ||
-        art.intro.toLowerCase().includes(q)
-      );
+                                <div class="grid grid-cols-2 gap-3 pt-2 text-xs">
+                                    <div class="p-3 rounded-xl bg-slate-100/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+                                        <p class="text-slate-400 font-medium">Employee PF (12%)</p>
+                                        <p id="outEePf" class="text-base font-bold text-indigo-500 font-mono mt-1">₹3,000</p>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-slate-100/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+                                        <p class="text-slate-400 font-medium">Employer EPS (8.33% Capped)</p>
+                                        <p id="outErEps" class="text-base font-bold text-purple-500 font-mono mt-1">₹1,250</p>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-slate-100/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+                                        <p class="text-slate-400 font-medium">Employer EPF (3.67%+)</p>
+                                        <p id="outErEpf" class="text-base font-bold text-emerald-500 font-mono mt-1">₹1,750</p>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-slate-100/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+                                        <p class="text-slate-400 font-medium">Net Post-PF Takehome</p>
+                                        <p id="outNetSalary" class="text-base font-bold text-brand-500 font-mono mt-1">₹22,000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-      if (filtered.length === 0) {
-        resultsContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">No matching articles found.</p>';
-        return;
-      }
+                        <!-- Excel Tester Utility -->
+                        <div class="glass p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 space-y-6">
+                            <div class="flex items-center gap-3 border-b border-slate-200/50 dark:border-slate-800/50 pb-4">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-base">Excel XLOOKUP & IF Formula Tester</h3>
+                                    <p class="text-xs text-slate-400">Test formula outputs against a sample employee dataset</p>
+                                </div>
+                            </div>
 
-      resultsContainer.innerHTML = filtered.map(art => `
-        <div onclick="navigateTo('article', '${art.id}'); toggleSearchModal(false);" class="p-3 rounded-xl hover:bg-brand-500/10 cursor-pointer flex items-center justify-between transition-colors">
-          <div>
-            <h5 class="text-sm font-bold text-slate-800 dark:text-slate-100">${art.title}</h5>
-            <span class="text-[10px] text-brand-500 font-semibold">${art.categoryName}</span>
-          </div>
-          <i class="fa-solid fa-arrow-right text-xs text-slate-400"></i>
-        </div>
-      `).join('');
-    }
+                            <div class="space-y-4">
+                                <div class="text-xs space-y-1 font-mono bg-slate-900 text-slate-300 p-3 rounded-xl">
+                                    <p class="text-emerald-400 font-bold">// Sample Employee Dataset:</p>
+                                    <p>ID: 101 | Name: Rahul Sharma | Dept: Sales | Salary: 45000</p>
+                                    <p>ID: 102 | Name: Priya Patel | Dept: HR | Salary: 62000</p>
+                                    <p>ID: 103 | Name: Amit Kumar | Dept: Tech | Salary: 80000</p>
+                                </div>
 
-    // Keyboard Shortcuts (Ctrl + K)
-    document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        toggleSearchModal(true);
-      }
-      if (e.key === 'Escape') {
-        toggleSearchModal(false);
-        toggleMobileDrawer(false);
-      }
-    });
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 mb-1">Enter Lookup ID (101, 102, 103)</label>
+                                    <div class="flex gap-2">
+                                        <input type="number" id="xlLookupId" value="102" class="w-full px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-sm font-mono outline-none">
+                                        <button onclick="testExcelFormula()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs rounded-xl transition">
+                                            Run Formula
+                                        </button>
+                                    </div>
+                                </div>
 
-    /* Mobile Drawer Toggle */
-    function toggleMobileDrawer(show) {
-      const drawer = document.getElementById('mobileDrawer');
-      if (show) {
-        drawer.classList.remove('invisible', 'opacity-0');
-      } else {
-        drawer.classList.add('invisible', 'opacity-0');
-      }
-    }
+                                <div class="p-3 rounded-xl bg-slate-100/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-xs font-mono space-y-2">
+                                    <p class="text-slate-400">XLOOKUP Result: <span id="xlResult" class="text-emerald-400 font-bold">Priya Patel (HR)</span></p>
+                                    <p class="text-slate-400">IF Evaluation (>₹50k High Earner): <span id="xlIfResult" class="text-brand-400 font-bold">TRUE - High Bracket</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
 
-    /* ==========================================================================
-       7. THEME SWITCHER (Dark / Light Mode Persistent)
-       ========================================================================== */
-    function toggleTheme() {
-      const html = document.documentElement;
-      if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        html.classList.add('light');
-        localStorage.setItem('aj_theme', 'light');
-      } else {
-        html.classList.remove('light');
-        html.classList.add('dark');
-        localStorage.setItem('aj_theme', 'dark');
-      }
-    }
+            calculatePF();
+            testExcelFormula();
+        }
 
-    // Load saved theme state on initial render
-    window.onload = function() {
-      const savedTheme = localStorage.getItem('aj_theme') || 'dark';
-      document.documentElement.className = savedTheme;
-      
-      // Initialize dynamic widgets
-      runXLookupSim();
-      calculatePf();
-    };
-  </script>
+        // Category Card Renderer Helper
+        function renderCategoryCard(title, icon, color, subtitle) {
+            return `
+                <div onclick="filterCategory('${title}')" class="glass glass-card p-4 rounded-2xl cursor-pointer border border-slate-200/50 dark:border-slate-800/50 group">
+                    <div class="w-10 h-10 rounded-xl bg-${color}-500/10 text-${color}-500 flex items-center justify-center mb-3 text-lg group-hover:scale-110 transition-transform">
+                        <i class="fa-solid ${icon}"></i>
+                    </div>
+                    <h3 class="font-bold text-sm group-hover:text-brand-500 transition-colors">${title}</h3>
+                    <p class="text-xs text-slate-400 mt-0.5 truncate">${subtitle}</p>
+                </div>
+            `;
+        }
+
+        // Article Card Renderer Helper
+        function renderArticleCard(art) {
+            return `
+                <div onclick="navigateTo('article', '${art.id}')" class="glass glass-card rounded-2xl p-5 border border-slate-200/50 dark:border-slate-800/50 cursor-pointer flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="px-2.5 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 font-medium">${art.category}</span>
+                            <span class="text-slate-400">${art.readTime}</span>
+                        </div>
+                        <h3 class="font-bold text-base leading-snug hover:text-brand-500 transition-colors">${art.title}</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${art.summary}</p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-slate-200/40 dark:border-slate-800/40 flex items-center justify-between text-xs text-slate-400">
+                        <span>By ${art.author}</span>
+                        <span class="text-brand-500 font-semibold flex items-center gap-1">Read <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCategoryView(category) {
+            const filtered = articles.filter(a => a.category.toLowerCase() === category.toLowerCase());
+            const app = document.getElementById('app');
+
+            app.innerHTML = `
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <button onclick="navigateTo('home')" class="hover:underline">Home</button>
+                        <span>/</span>
+                        <span class="text-slate-200 font-medium">${category}</span>
+                    </div>
+
+                    <div class="flex items-center justify-between border-b border-slate-200/50 dark:border-slate-800/50 pb-4">
+                        <div>
+                            <h1 class="text-2xl font-bold">${category} Articles</h1>
+                            <p class="text-xs text-slate-400 mt-1">Showing ${filtered.length} documentation guide(s)</p>
+                        </div>
+                        <button onclick="navigateTo('home')" class="px-3 py-1.5 text-xs rounded-xl glass hover:bg-slate-800">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Back
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${filtered.length > 0 ? filtered.map(art => renderArticleCard(art)).join('') : '<p class="text-sm text-slate-500">No articles found in this category.</p>'}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderArticleView(articleId) {
+            const art = articles.find(a => a.id === articleId) || articles[0];
+            const related = articles.filter(a => a.id !== art.id && a.category === art.category);
+            const app = document.getElementById('app');
+
+            app.innerHTML = `
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <!-- Breadcrumbs -->
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <button onclick="navigateTo('home')" class="hover:underline">Home</button>
+                        <span>/</span>
+                        <button onclick="filterCategory('${art.category}')" class="hover:underline">${art.category}</button>
+                        <span>/</span>
+                        <span class="text-slate-300 font-medium truncate max-w-xs">${art.title}</span>
+                    </div>
+
+                    <!-- Article Header Header -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="px-3 py-1 rounded-full bg-brand-500/10 text-brand-500 font-semibold text-xs border border-brand-500/20">${art.badge || art.category}</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> ${art.readTime}</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">${art.title}</h1>
+                        <div class="flex items-center gap-4 text-xs text-slate-400 border-b border-slate-200/50 dark:border-slate-800/50 pb-6">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-user text-brand-500 text-sm"></i> ${art.author}</span>
+                            <span>•</span>
+                            <span>Updated ${art.date}</span>
+                        </div>
+                    </div>
+
+                    <!-- Main HTML Article Body -->
+                    <div class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+                        ${art.content}
+                    </div>
+
+                    <!-- FAQ Accordion Block -->
+                    ${art.faqs && art.faqs.length > 0 ? `
+                        <div class="pt-8 border-t border-slate-200/50 dark:border-slate-800/50 space-y-4">
+                            <h3 class="text-lg font-bold">Frequently Asked Questions</h3>
+                            <div class="space-y-3">
+                                ${art.faqs.map(faq => `
+                                    <div class="glass p-4 rounded-xl border border-slate-200/50 dark:border-slate-800/50">
+                                        <h4 class="font-bold text-sm text-slate-200">${faq.q}</h4>
+                                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">${faq.a}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <!-- Related Articles Footer -->
+                    ${related.length > 0 ? `
+                        <div class="pt-8 border-t border-slate-200/50 dark:border-slate-800/50 space-y-4">
+                            <h3 class="text-lg font-bold">Related Articles in ${art.category}</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                ${related.map(r => renderArticleCard(r)).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function calculatePF() {
+            const basic = parseFloat(document.getElementById('pfBasicInput')?.value) || 0;
+            const eePf = basic * 0.12;
+            
+            // EPS Statutory limit ₹15,000 ceiling
+            const epsBase = Math.min(basic, 15000);
+            const erEps = epsBase * 0.0833;
+            const erEpf = eePf - erEps;
+            const netSalary = basic - eePf;
+
+            if (document.getElementById('outEePf')) {
+                document.getElementById('outEePf').innerText = `₹${Math.round(eePf).toLocaleString()}`;
+                document.getElementById('outErEps').innerText = `₹${Math.round(erEps).toLocaleString()}`;
+                document.getElementById('outErEpf').innerText = `₹${Math.round(erEpf).toLocaleString()}`;
+                document.getElementById('outNetSalary').innerText = `₹${Math.round(netSalary).toLocaleString()}`;
+            }
+        }
+
+        // Excel Formula Simulation Logic
+        function testExcelFormula() {
+            const idInput = parseInt(document.getElementById('xlLookupId')?.value) || 101;
+            const db = [
+                { id: 101, name: "Rahul Sharma", dept: "Sales", salary: 45000 },
+                { id: 102, name: "Priya Patel", dept: "HR", salary: 62000 },
+                { id: 103, name: "Amit Kumar", dept: "Tech", salary: 80000 }
+            ];
+
+            const found = db.find(emp => emp.id === idInput);
+            const resEl = document.getElementById('xlResult');
+            const ifResEl = document.getElementById('xlIfResult');
+
+            if (!resEl || !ifResEl) return;
+
+            if (found) {
+                resEl.innerText = `${found.name} (${found.dept})`;
+                if (found.salary > 50000) {
+                    ifResEl.innerText = `TRUE - High Bracket (₹${found.salary.toLocaleString()})`;
+                    ifResEl.className = "text-emerald-400 font-bold";
+                } else {
+                    ifResEl.innerText = `FALSE - Standard Bracket (₹${found.salary.toLocaleString()})`;
+                    ifResEl.className = "text-amber-400 font-bold";
+                }
+            } else {
+                resEl.innerText = "#N/A (Employee Not Found)";
+                ifResEl.innerText = "N/A";
+            }
+        }
+
+        // Global Search Modal Logic
+        function openSearchModal() {
+            document.getElementById('searchModal').classList.remove('hidden');
+            document.getElementById('searchInput').focus();
+        }
+
+        function closeSearchModal() {
+            document.getElementById('searchModal').classList.add('hidden');
+        }
+
+        function handleSearch(query) {
+            const resultsContainer = document.getElementById('searchResults');
+            const q = query.toLowerCase().trim();
+
+            if (!q) {
+                resultsContainer.innerHTML = '<p class="text-center text-sm text-slate-500 py-8">Start typing to search articles...</p>';
+                return;
+            }
+
+            const matched = articles.filter(a => 
+                a.title.toLowerCase().includes(q) || 
+                a.summary.toLowerCase().includes(q) || 
+                a.category.toLowerCase().includes(q)
+            );
+
+            if (matched.length === 0) {
+                resultsContainer.innerHTML = '<p class="text-center text-sm text-slate-500 py-8">No matching articles found.</p>';
+                return;
+            }
+
+            resultsContainer.innerHTML = matched.map(a => `
+                <div onclick="navigateTo('article', '${a.id}'); closeSearchModal();" class="p-3 rounded-xl hover:bg-slate-200/50 dark:hover:bg-slate-800/50 cursor-pointer transition flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-sm">${a.title}</h4>
+                        <p class="text-xs text-slate-400 truncate max-w-md">${a.summary}</p>
+                    </div>
+                    <span class="text-xs px-2 py-0.5 rounded bg-brand-500/10 text-brand-400">${a.category}</span>
+                </div>
+            `).join('');
+        }
+
+        function promptAdminAccess() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            if (adminAuthed) {
+                document.getElementById('adminAuthBlock').classList.add('hidden');
+                document.getElementById('adminContentBlock').classList.remove('hidden');
+            } else {
+                document.getElementById('adminAuthBlock').classList.remove('hidden');
+                document.getElementById('adminContentBlock').classList.add('hidden');
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function verifyAdminPin() {
+            const pin = document.getElementById('adminPinInput').value;
+            if (pin === '1234') {
+                adminAuthed = true;
+                document.getElementById('adminAuthBlock').classList.add('hidden');
+                document.getElementById('adminContentBlock').classList.remove('hidden');
+            } else {
+                alert('Invalid Security PIN. Default PIN is 1234.');
+            }
+        }
+
+        function saveNewArticle(e) {
+            e.preventDefault();
+            const newArt = {
+                id: document.getElementById('newSlug').value.trim(),
+                title: document.getElementById('newTitle').value.trim(),
+                category: document.getElementById('newCategory').value,
+                badge: document.getElementById('newBadge').value.trim() || 'Guide',
+                readTime: document.getElementById('newReadTime').value.trim() || '3 min read',
+                author: 'Admin Desk',
+                date: 'Sep 2026',
+                summary: document.getElementById('newSummary').value.trim(),
+                content: document.getElementById('newContent').value.trim(),
+                faqs: []
+            };
+
+            articles.unshift(newArt);
+            localStorage.setItem('aj_articles', JSON.stringify(articles));
+            alert('Article Published Successfully!');
+            closeAdminModal();
+            renderHome();
+        }
+
+        function copyArticlesJSON() {
+            const jsonCode = JSON.stringify(articles, null, 2);
+            const textarea = document.createElement('textarea');
+            textarea.value = jsonCode;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Articles JSON copied to clipboard! Paste it into index.html to sync GitHub deployment.');
+        }
+    </script>
 </body>
 </html>
